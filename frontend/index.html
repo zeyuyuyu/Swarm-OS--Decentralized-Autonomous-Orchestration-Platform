@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swarm-OS Dashboard</title>
+    <style>
+        :root {
+            --primary: #2962ff;
+            --secondary: #0039cb;
+            --success: #00c853;
+            --danger: #d50000;
+            --dark: #1a237e;
+            --light: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--dark);
+            color: var(--light);
+            padding: 2rem;
+            position: fixed;
+            height: 100vh;
+            width: 250px;
+        }
+
+        .sidebar h1 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 1rem;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin: 1rem 0;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .main-content {
+            padding: 2rem;
+            margin-left: 250px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .metrics {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .metric .label {
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-healthy {
+            background: var(--success);
+        }
+
+        .status-warning {
+            background: #ffd600;
+        }
+
+        .status-error {
+            background: var(--danger);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h1>Swarm-OS</h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#nodes">Nodes</a></li>
+                    <li><a href="#tasks">Tasks</a></li>
+                    <li><a href="#metrics">Metrics</a></li>
+                    <li><a href="#settings">Settings</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <h1>System Overview</h1>
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h2>Cluster Status</h2>
+                    <div class="metrics">
+                        <div class="metric">
+                            <div class="value">
+                                <span class="status-indicator status-healthy"></span>
+                                24
+                            </div>
+                            <div class="label">Active Nodes</div>
+                        </div>
+                        <div class="metric">
+                            <div class="value">98.5%</div>
+                            <div class="label">Availability</div>
+                        </div>
+                        <div class="metric">
+                            <div class="value">142</div>
+                            <div class="label">Tasks</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Resource Utilization</h2>
+                    <div class="metrics">
+                        <div class="metric">
+                            <div class="value">76%</div>
+                            <div class="label">CPU</div>
+                        </div>
+                        <div class="metric">
+                            <div class="value">82%</div>
+                            <div class="label">Memory</div>
+                        </div>
+                        <div class="metric">
+                            <div class="value">64%</div>
+                            <div class="label">Storage</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Network Status</h2>
+                    <div class="metrics">
+                        <div class="metric">
+                            <div class="value">1.2 GB/s</div>
+                            <div class="label">Throughput</div>
+                        </div>
+                        <div class="metric">
+                            <div class="value">24ms</div>
+                            <div class="label">Latency</div>
+                        </div>
+                        <div class="metric">
+                            <div class="value">99.9%</div>
+                            <div class="label">Uptime</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Add error handling for dynamic content loading
+        window.addEventListener('error', function(e) {
+            console.error('Runtime error:', e);
+            // Implement error notification system
+        });
+
+        // Implement real-time updates
+        function updateMetrics() {
+            try {
+                // Fetch and update metrics from backend
+                console.log('Updating metrics...');
+            } catch (error) {
+                console.error('Failed to update metrics:', error);
+            }
+        }
+
+        // Update metrics every 5 seconds
+        setInterval(updateMetrics, 5000);
+    </script>
+</body>
+</html>
