@@ -6,73 +6,61 @@
     <title>Swarm-OS Dashboard</title>
     <style>
         :root {
-            --primary: #2962ff;
-            --secondary: #0039cb;
-            --success: #00c853;
-            --danger: #d50000;
-            --dark: #1a237e;
-            --light: #f5f5f5;
+            --primary: #6200ee;
+            --secondary: #03dac6;
+            --background: #121212;
+            --surface: #1e1e1e;
+            --error: #cf6679;
+            --text: #ffffff;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
         }
 
         body {
-            background: var(--light);
-            color: var(--dark);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
         }
 
         .container {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            min-height: 100vh;
-        }
-
-        .sidebar {
-            background: var(--dark);
-            color: var(--light);
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 2rem;
-            position: fixed;
-            height: 100vh;
-            width: 250px;
         }
 
-        .sidebar h1 {
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--surface);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .logo {
             font-size: 1.5rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 1rem;
+            font-weight: bold;
+            color: var(--secondary);
         }
 
         .nav-links {
-            list-style: none;
-        }
-
-        .nav-links li {
-            margin: 1rem 0;
+            display: flex;
+            gap: 2rem;
         }
 
         .nav-links a {
-            color: var(--light);
+            color: var(--text);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            padding: 0.75rem;
-            border-radius: 8px;
-            transition: background 0.3s;
+            transition: color 0.3s;
         }
 
         .nav-links a:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        .main-content {
-            padding: 2rem;
-            margin-left: 250px;
+            color: var(--secondary);
         }
 
         .dashboard-grid {
@@ -83,163 +71,171 @@
         }
 
         .card {
-            background: white;
-            border-radius: 12px;
+            background: var(--surface);
+            border-radius: 8px;
             padding: 1.5rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .card h2 {
-            color: var(--primary);
+            color: var(--secondary);
             margin-bottom: 1rem;
-        }
-
-        .metrics {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 1rem;
-        }
-
-        .metric {
-            text-align: center;
-        }
-
-        .metric .value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--dark);
-        }
-
-        .metric .label {
-            font-size: 0.875rem;
-            color: #666;
         }
 
         .status-indicator {
             display: inline-block;
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             margin-right: 8px;
         }
 
-        .status-healthy {
-            background: var(--success);
+        .status-active {
+            background: #4caf50;
         }
 
-        .status-warning {
-            background: #ffd600;
+        .status-inactive {
+            background: var(--error);
         }
 
-        .status-error {
-            background: var(--danger);
+        .metrics {
+            margin-top: 1rem;
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .button:hover {
+            background: #7c4dff;
         }
 
         @media (max-width: 768px) {
             .container {
-                grid-template-columns: 1fr;
+                padding: 1rem;
             }
 
-            .sidebar {
-                display: none;
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
             }
 
-            .main-content {
-                margin-left: 0;
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <h1>Swarm-OS</h1>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="#dashboard">Dashboard</a></li>
-                    <li><a href="#nodes">Nodes</a></li>
-                    <li><a href="#tasks">Tasks</a></li>
-                    <li><a href="#metrics">Metrics</a></li>
-                    <li><a href="#settings">Settings</a></li>
-                </ul>
-            </nav>
-        </aside>
+    <header class="header">
+        <div class="logo">Swarm-OS</div>
+        <nav class="nav-links">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#agents">Agents</a>
+            <a href="#analytics">Analytics</a>
+            <a href="#settings">Settings</a>
+        </nav>
+    </header>
 
-        <main class="main-content">
-            <h1>System Overview</h1>
-            <div class="dashboard-grid">
-                <div class="card">
-                    <h2>Cluster Status</h2>
-                    <div class="metrics">
-                        <div class="metric">
-                            <div class="value">
-                                <span class="status-indicator status-healthy"></span>
-                                24
-                            </div>
-                            <div class="label">Active Nodes</div>
-                        </div>
-                        <div class="metric">
-                            <div class="value">98.5%</div>
-                            <div class="label">Availability</div>
-                        </div>
-                        <div class="metric">
-                            <div class="value">142</div>
-                            <div class="label">Tasks</div>
-                        </div>
-                    </div>
+    <main class="container">
+        <div class="dashboard-grid">
+            <div class="card">
+                <h2>System Status</h2>
+                <div>
+                    <span class="status-indicator status-active"></span>
+                    <span>System Online</span>
                 </div>
-
-                <div class="card">
-                    <h2>Resource Utilization</h2>
-                    <div class="metrics">
-                        <div class="metric">
-                            <div class="value">76%</div>
-                            <div class="label">CPU</div>
-                        </div>
-                        <div class="metric">
-                            <div class="value">82%</div>
-                            <div class="label">Memory</div>
-                        </div>
-                        <div class="metric">
-                            <div class="value">64%</div>
-                            <div class="label">Storage</div>
-                        </div>
+                <div class="metrics">
+                    <div class="metric-item">
+                        <span>Active Agents</span>
+                        <span>42</span>
                     </div>
-                </div>
-
-                <div class="card">
-                    <h2>Network Status</h2>
-                    <div class="metrics">
-                        <div class="metric">
-                            <div class="value">1.2 GB/s</div>
-                            <div class="label">Throughput</div>
-                        </div>
-                        <div class="metric">
-                            <div class="value">24ms</div>
-                            <div class="label">Latency</div>
-                        </div>
-                        <div class="metric">
-                            <div class="value">99.9%</div>
-                            <div class="label">Uptime</div>
-                        </div>
+                    <div class="metric-item">
+                        <span>CPU Usage</span>
+                        <span>67%</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>Memory Usage</span>
+                        <span>4.2 GB</span>
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
+
+            <div class="card">
+                <h2>Agent Network</h2>
+                <div class="metrics">
+                    <div class="metric-item">
+                        <span>Total Connections</span>
+                        <span>156</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>Network Latency</span>
+                        <span>45ms</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>Packet Loss</span>
+                        <span>0.01%</span>
+                    </div>
+                </div>
+                <button class="button" style="margin-top: 1rem;">View Network Map</button>
+            </div>
+
+            <div class="card">
+                <h2>Recent Activities</h2>
+                <div id="activities">
+                    <div class="metric-item">
+                        <span>Agent-7 Deployed</span>
+                        <span>2m ago</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>Pipeline Updated</span>
+                        <span>15m ago</span>
+                    </div>
+                    <div class="metric-item">
+                        <span>System Backup</span>
+                        <span>1h ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <script>
-        // Add error handling for dynamic content loading
-        window.addEventListener('error', function(e) {
-            console.error('Runtime error:', e);
-            // Implement error notification system
-        });
+        // Error handling for dynamic content loading
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
+            return false;
+        };
 
-        // Implement real-time updates
+        // Dynamic status updates
         function updateMetrics() {
             try {
-                // Fetch and update metrics from backend
-                console.log('Updating metrics...');
+                // Simulated metrics update
+                const metrics = {
+                    cpuUsage: Math.floor(Math.random() * 100),
+                    memoryUsage: (Math.random() * 8).toFixed(1),
+                    activeAgents: Math.floor(Math.random() * 50) + 30
+                };
+
+                // Update DOM
+                document.querySelector('.metric-item:nth-child(2) span:last-child').textContent = metrics.cpuUsage + '%';
+                document.querySelector('.metric-item:nth-child(3) span:last-child').textContent = metrics.memoryUsage + ' GB';
+                document.querySelector('.metric-item:nth-child(1) span:last-child').textContent = metrics.activeAgents;
             } catch (error) {
                 console.error('Failed to update metrics:', error);
             }
