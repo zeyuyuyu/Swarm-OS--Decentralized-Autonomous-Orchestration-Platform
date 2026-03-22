@@ -3,199 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swarm OS Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #00ff9d;
-            --secondary: #0a192f;
-            --accent: #64ffda;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Orbitron', sans-serif;
-            background: var(--secondary);
-            color: var(--primary);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .header h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 10px var(--primary);
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 1.5rem;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .metric {
-            font-size: 2rem;
-            margin: 1rem 0;
-            color: var(--accent);
-        }
-
-        .nodes-container {
-            position: relative;
-            height: 300px;
-            margin-top: 2rem;
-        }
-
-        .node {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--primary);
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 10px var(--primary);
-            }
-            to {
-                text-shadow: 0 0 20px var(--primary), 0 0 30px var(--accent);
-            }
-        }
-
-        .stats {
-            margin-top: 2rem;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 1rem 0;
-        }
-
-        .progress {
-            height: 100%;
-            background: var(--primary);
-            width: 75%;
-            transition: width 0.3s ease;
-        }
-    </style>
+    <title>SwarmOS - Collaborative Cloud Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
-<body>
-    <div class="container">
-        <header class="header">
-            <h1>Swarm OS Dashboard</h1>
-            <p>Decentralized Autonomous Orchestration Platform</p>
-        </header>
-
-        <div class="grid">
-            <div class="card">
-                <h2>Active Nodes</h2>
-                <div class="metric" id="nodeCount">42</div>
-                <div class="nodes-container" id="nodesVisual"></div>
+<body class="bg-gradient-to-br from-indigo-900 to-purple-800 min-h-screen text-white">
+    <nav class="p-4 backdrop-blur-md bg-black bg-opacity-30 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="/assets/logo.svg" class="h-8 w-8 animate-pulse" alt="SwarmOS Logo">
+                <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">SwarmOS</span>
             </div>
+            <div class="flex items-center space-x-4">
+                <span class="px-3 py-1 bg-purple-600 rounded-full text-sm">🏆 Rank: Master Explorer</span>
+                <span class="px-3 py-1 bg-yellow-500 rounded-full text-sm">⚡ 2,450 Points</span>
+                <div class="relative">
+                    <img src="https://api.dicebear.com/6.x/avataaars/svg?seed=Felix" class="w-10 h-10 rounded-full border-2 border-purple-400">
+                    <span class="absolute -top-1 -right-1 bg-green-500 w-3 h-3 rounded-full border-2 border-white"></span>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-            <div class="card">
-                <h2>System Health</h2>
-                <div class="metric">98%</div>
-                <div class="progress-bar">
-                    <div class="progress"></div>
+    <main class="container mx-auto p-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Main Workspace -->
+            <div class="md:col-span-2 space-y-4">
+                <div class="bg-black bg-opacity-40 rounded-xl p-6 backdrop-blur-lg border border-purple-500/30">
+                    <h2 class="text-2xl font-bold mb-4">🚀 Active Swarms</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-purple-900/50 rounded-lg hover:bg-purple-800/50 transition-all cursor-pointer">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">🔮</span>
+                                <div>
+                                    <h3 class="font-semibold">AI Model Training</h3>
+                                    <p class="text-sm text-purple-300">12 nodes · 89% complete</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-1 bg-green-500/20 text-green-300 rounded-md text-xs">+125 pts/hr</span>
+                                <button class="px-4 py-2 bg-purple-500 rounded-md hover:bg-purple-600 transition-all">Join</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-black bg-opacity-40 rounded-xl p-6 backdrop-blur-lg border border-purple-500/30">
+                    <h2 class="text-2xl font-bold mb-4">🏆 Leaderboard</h2>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-yellow-500/10 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-yellow-500 font-bold">1</span>
+                                <img src="https://api.dicebear.com/6.x/avataaars/svg?seed=Alex" class="w-8 h-8 rounded-full">
+                                <span>Alex.eth</span>
+                            </div>
+                            <span class="font-mono">12,450 pts</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="card">
-                <h2>Tasks Completed</h2>
-                <div class="metric" id="taskCount">1,337</div>
-                <div class="stats">
-                    <p>Success Rate: 99.9%</p>
-                    <p>Avg. Response Time: 42ms</p>
+            <!-- Side Panel -->
+            <div class="space-y-4">
+                <div class="bg-black bg-opacity-40 rounded-xl p-6 backdrop-blur-lg border border-purple-500/30">
+                    <h2 class="text-2xl font-bold mb-4">🎯 Daily Challenges</h2>
+                    <div class="space-y-3">
+                        <div class="p-3 bg-purple-900/50 rounded-lg">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-semibold">Deploy 3 Swarms</span>
+                                <span class="text-purple-300 text-sm">+500 pts</span>
+                            </div>
+                            <div class="w-full bg-purple-900 rounded-full h-2">
+                                <div class="bg-purple-500 h-2 rounded-full" style="width: 66%"></div>
+                            </div>
+                            <span class="text-xs text-purple-300">2/3 completed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-black bg-opacity-40 rounded-xl p-6 backdrop-blur-lg border border-purple-500/30">
+                    <h2 class="text-2xl font-bold mb-4">🌟 Achievements</h2>
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="flex flex-col items-center p-3 bg-purple-900/50 rounded-lg">
+                            <span class="text-2xl mb-1">🚀</span>
+                            <span class="text-xs text-center">First Launch</span>
+                        </div>
+                        <div class="flex flex-col items-center p-3 bg-purple-900/50 rounded-lg">
+                            <span class="text-2xl mb-1">⚡</span>
+                            <span class="text-xs text-center">Speed Demon</span>
+                        </div>
+                        <div class="flex flex-col items-center p-3 bg-purple-900/50 rounded-lg opacity-50">
+                            <span class="text-2xl mb-1">🎯</span>
+                            <span class="text-xs text-center">Locked</span>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </main>
+
+    <!-- Notification Toast -->
+    <div class="fixed bottom-4 right-4 animate__animated animate__fadeInUp">
+        <div class="bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2">
+            <span class="text-xl">🎉</span>
+            <span>+50 points earned! Keep going!</span>
         </div>
     </div>
 
     <script>
-        // Animated nodes visualization
-        function createNodes() {
-            const container = document.getElementById('nodesVisual');
-            const nodeCount = 20;
-
-            for (let i = 0; i < nodeCount; i++) {
-                const node = document.createElement('div');
-                node.className = 'node';
-                node.style.left = `${Math.random() * 100}%`;
-                node.style.top = `${Math.random() * 100}%`;
-                container.appendChild(node);
-
-                // Animate nodes
-                setInterval(() => {
-                    node.style.left = `${Math.random() * 100}%`;
-                    node.style.top = `${Math.random() * 100}%`;
-                }, 3000 + Math.random() * 2000);
-            }
-        }
-
-        // Increment counters
-        function animateNumbers() {
-            const nodeCount = document.getElementById('nodeCount');
-            const taskCount = document.getElementById('taskCount');
-            let nodes = 0;
-            let tasks = 0;
-
-            const nodeInterval = setInterval(() => {
-                nodes++;
-                nodeCount.textContent = nodes;
-                if (nodes >= 42) clearInterval(nodeInterval);
-            }, 50);
-
-            const taskInterval = setInterval(() => {
-                tasks += 7;
-                taskCount.textContent = tasks.toLocaleString();
-                if (tasks >= 1337) clearInterval(taskInterval);
-            }, 20);
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            createNodes();
-            animateNumbers();
-        });
+        // Add interactive features, real-time updates, and WebSocket connections here
     </script>
 </body>
 </html>
