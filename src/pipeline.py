@@ -1,56 +1,43 @@
-import asyncio
-import uuid
-from typing import List, Dict
+import multiprocessing as mp
+import networkx as nx
+import time
 
-from .main import SwarmNode
+class DistributedPipeline:
+    def __init__(self, graph):
+        self.graph = graph
+        self.node_procs = {}
 
-class CoordinationPipeline:
-    def __init__(self, nodes: List[SwarmNode]):
-        self.nodes = nodes
-        self.task_queue = asyncio.Queue()
-        self.result_queue = asyncio.Queue()
-        self.task_id_to_node = {}
+    def run(self):
+        for node in self.graph.nodes:
+            proc = mp.Process(target=self.execute_node, args=(node,))
+            proc.start()
+            self.node_procs[node] = proc
 
-    async def run(self):
-        await asyncio.gather(
-            self.distribute_tasks(),
-            self.collect_results(),
-            self.orchestrate_pipeline()
-        )
+        for node, proc in self.node_procs.items():
+            proc.join()
 
-    async def distribute_tasks(self):
-        while True:
-            task = await self.task_queue.get()
-            node = self.get_available_node()
-            task_id = str(uuid.uuid4())
-            self.task_id_to_node[task_id] = node
-            await node.execute_task(task_id, task)
-            self.task_queue.task_done()
+    def execute_node(self, node):
+        print(f'Executing node: {node}')
+        # Execute node logic here
+        time.sleep(2)
+        print(f'Node {node} complete')
 
-    async def collect_results(self):
-        while True:
-            task_id, result = await self.nodes[0].get_result()
-            self.result_queue.put_nowait((task_id, result))
-            del self.task_id_to_node[task_id]
+        # Check dependencies
+        deps = list(self.graph.predecessors(node))
+        if not deps:
+            return
 
-    async def orchestrate_pipeline(self):
-        while True:
-            # Fetch tasks from external sources
-            tasks = await self.fetch_tasks()
-            for task in tasks:
-                await self.task_queue.put(task)
+        # Wait for dependencies to complete
+        for dep in deps:
+            self.node_procs[dep].join()
 
-            # Process results
-            while not self.result_queue.empty():
-                task_id, result = await self.result_queue.get()
-                node = self.task_id_to_node[task_id]
-                await node.handle_result(task_id, result)
-                self.result_queue.task_done()
+        # Execute downstream nodes
+        for child in self.graph.successors(node):
+            self.execute_node(child)
 
-    def get_available_node(self) -> SwarmNode:
-        # Implement a load-balancing strategy to distribute tasks across nodes
-        return self.nodes[0]
+if __name__ == '__main__':
+    graph = nx.DiGraph()
+    graph.add_edges_from([('A', 'B'), ('B', 'C'), ('B', 'D'), ('C', 'E'), ('D', 'E')])
 
-    async def fetch_tasks(self) -> List[Dict]:
-        # Implement a mechanism to fetch tasks from external sources
-        return []
+    pipeline = DistributedPipeline(graph)
+    pipeline.run()
